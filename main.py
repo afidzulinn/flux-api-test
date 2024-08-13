@@ -7,7 +7,7 @@ import os
 
 import uvicorn
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 app = FastAPI()
 
@@ -30,10 +30,9 @@ async def generate_image(prompt: str = Form(...)):
         guidance_scale=0.0,
         num_inference_steps=4,
         max_sequence_length=256,
-        generator=torch.Generator("device").manual_seed(prompt.seed)
+        generator=torch.Generator("cpu").manual_seed(prompt.seed)
     ).images[0]
         
-        # Save the image
     output_path = "generated_image.png"
     image.save(output_path)
         
